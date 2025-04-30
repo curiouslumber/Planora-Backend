@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: planora-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: planora
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - planora-net
+
+  app:
+    build: .
+    container_name: planora-app
+    ports:
+      - "8080:8080"
+    environment:
+      MYSQL_URL: jdbc:mysql://mysql:3306/planora
+      MYSQL_USERNAME: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    depends_on:
+      - mysql
+    networks:
+      - planora-net
+
+volumes:
+  mysql_data:
+
+networks:
+  planora-net:
