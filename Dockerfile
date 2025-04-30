@@ -1,5 +1,5 @@
 # Use Eclipse Temurin JDK for Java 17
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:17-jdk
 
 # Set working directory
 WORKDIR /app
