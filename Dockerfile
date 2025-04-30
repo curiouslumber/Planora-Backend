@@ -1,26 +1,14 @@
 # Use Eclipse Temurin JDK for Java 17
 FROM eclipse-temurin:17-jdk
 
-# Set working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy the pom.xml and download dependencies (leverage caching)
-COPY pom.xml .
-RUN mvn dependency:go-offline -B
+# Copy the built JAR into the container
+COPY target/*.jar app.jar
 
-# Now copy the rest of the source code
-COPY src ./src
+# Expose the port your app runs on (Spring Boot defaults to 8080)
+EXPOSE 8080
 
-# Build the project (skip tests if needed)
-RUN mvn clean package -DskipTests
-
-# -------- Stage 2: Run the application --------
-FROM eclipse-temurin:17-jdk
-
-WORKDIR /app
-
-# Copy the built JAR from the previous stage
-COPY --from=builder /app/target/*.jar app.jar
-
-# Run the app
+# Run the Spring Boot application
 ENTRYPOINT ["java", "-jar", "app.jar"]
