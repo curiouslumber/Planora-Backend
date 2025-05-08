@@ -17,7 +17,7 @@ public class PlanoraApplication {
 	}
 
 	@Bean
-	public DataSource dataSource() {
+	DataSource dataSource() {
 		Dotenv dotenv = Dotenv.load();
 		return DataSourceBuilder.create()
 				.driverClassName("com.mysql.cj.jdbc.Driver")

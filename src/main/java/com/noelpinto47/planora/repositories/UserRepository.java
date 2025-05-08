@@ -1,0 +1,10 @@
+package com.noelpinto47.planora.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.noelpinto47.planora.entities.User;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+}
