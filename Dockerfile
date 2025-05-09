@@ -1,26 +1,27 @@
-# -------- Stage 1: Build the application --------
-FROM maven:3.9.3-eclipse-temurin-17 AS builder
+# Use a lightweight Ubuntu base image
+FROM ubuntu:22.04
+
+# Set environment variables for non-interactive installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update and install required packages: JDK and Maven
+RUN apt-get update && apt-get install -y \
+    openjdk-17-jdk \
+    maven \
+    && apt-get clean
 
 # Set working directory inside the container
 WORKDIR /app
 
-# Copy the pom.xml and download dependencies (leverage caching)
-COPY pom.xml .
-RUN mvn dependency:go-offline -B
+# Copy the entire project folder into the container
+COPY . .
 
-# Now copy the rest of the source code
-COPY src ./src
-
-# Build the project (skip tests if needed)
+# Build the application using Maven
 RUN mvn clean package -DskipTests
 
-# -------- Stage 2: Run the application --------
-FROM eclipse-temurin:17-jdk
+# Expose the application port
+EXPOSE 8080
 
-WORKDIR /app
+# Set the entry point to run the application
+CMD ["java", "-jar", "target/planora-0.0.1-SNAPSHOT.jar"]
 
-# Copy the built JAR from the previous stage
-COPY --from=builder /app/target/*.jar app.jar
-
-# Run the app
-ENTRYPOINT ["java", "-jar", "app.jar"]
