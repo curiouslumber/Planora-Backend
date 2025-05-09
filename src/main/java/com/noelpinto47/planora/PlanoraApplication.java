@@ -18,12 +18,15 @@ public class PlanoraApplication {
 
 	@Bean
 	DataSource dataSource() {
-		// Dotenv dotenv = Dotenv.load();
+		String url = System.getenv("MYSQL_URL");
+		String username = System.getenv("MYSQL_USERNAME");
+		String password = System.getenv("MYSQL_PASSWORD");
+
 		return DataSourceBuilder.create()
 				.driverClassName("com.mysql.cj.jdbc.Driver")
-				.url("jdbc:mysql://localhost:3306/planora")
-				.username("root")
-				.password("password")
+				.url(url)
+				.username(username)
+				.password(password)
 				.build();
 	}
 }
