@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 
-import io.github.cdimascio.dotenv.Dotenv;
+// import io.github.cdimascio.dotenv.Dotenv;
 
 @SpringBootApplication
 public class PlanoraApplication {
@@ -18,12 +18,12 @@ public class PlanoraApplication {
 
 	@Bean
 	DataSource dataSource() {
-		Dotenv dotenv = Dotenv.load();
+		// Dotenv dotenv = Dotenv.load();
 		return DataSourceBuilder.create()
 				.driverClassName("com.mysql.cj.jdbc.Driver")
-				.url(dotenv.get("MYSQL_URL"))
-				.username(dotenv.get("MYSQL_USERNAME"))
-				.password(dotenv.get("MYSQL_PASSWORD"))
+				.url("jdbc:mysql://localhost:3306/planora")
+				.username("root")
+				.password("password")
 				.build();
 	}
 }
