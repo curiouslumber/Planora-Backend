@@ -21,6 +21,7 @@ target/
 
 .env
 config.yml
+application.yml
 
 ### NetBeans ###
 /nbproject/private/
