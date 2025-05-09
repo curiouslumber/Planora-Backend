@@ -18,9 +18,9 @@ public class PlanoraApplication {
 
 	@Bean
 	DataSource dataSource() {
-		String url = System.getenv("MYSQL_URL");
-		String username = System.getenv("MYSQL_USERNAME");
-		String password = System.getenv("MYSQL_PASSWORD");
+		String url = "jdbc:mysql://localhost:3306/planora";
+		String username = "root";
+		String password = "password";
 
 		return DataSourceBuilder.create()
 				.driverClassName("com.mysql.cj.jdbc.Driver")
