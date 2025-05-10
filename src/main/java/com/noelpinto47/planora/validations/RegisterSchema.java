@@ -3,6 +3,7 @@ package com.noelpinto47.planora.validations;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 public class RegisterSchema {
@@ -23,6 +24,7 @@ public class RegisterSchema {
 
         @NotEmpty(message = "Login type is required")
         @JsonProperty("login_type")
+        @Pattern(regexp = "EMAIL_PASSWORD|GOOGLE|FACEBOOK|APPLE", message = "Login type must be one of EMAIL_PASSWORD, GOOGLE, FACEBOOK, APPLE")
         private String loginType;
     }
 }
