@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.noelpinto47.planora.dto.UserDTO;
+import com.noelpinto47.planora.entities.User;
 import com.noelpinto47.planora.mappers.UserMapper;
 import com.noelpinto47.planora.repositories.UserRepository;
 
@@ -20,5 +21,18 @@ public class UserService {
 
     public List<UserDTO> getAllUsers() {
         return userMapper.toUserDTOs(userRepository.findAll());
+    }
+
+    public boolean authenticateUser(String email, String password) {
+        if (email == null || password == null) {
+            return false;
+        }
+
+        User user = userRepository.findByEmailAndPassword(email, password);
+        if (user == null || !user.getPassword().equals(password)) {
+            return false;
+        }
+
+        return true;
     }
 }
