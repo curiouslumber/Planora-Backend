@@ -20,4 +20,16 @@ public class LoginSchema {
         @JsonProperty("password")
         private String password;
     }
+
+    @Data
+    public static class LoginResponseSchema {
+        @JsonProperty("name")
+        private String name;
+        @JsonProperty("email")
+        private String email;
+        @JsonProperty("login_type")
+        private String loginType;
+        @JsonProperty("profile_picture")
+        private String profilePicture;
+    }
 }

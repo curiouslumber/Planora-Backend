@@ -1,6 +1,7 @@
 package com.noelpinto47.planora.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -23,16 +24,29 @@ public class UserService {
         return userMapper.toUserDTOs(userRepository.findAll());
     }
 
-    public boolean authenticateUser(String email, String password) {
+    public User authenticateUser(String email, String password) {
         if (email == null || password == null) {
-            return false;
+            return null;
         }
 
         User user = userRepository.findByEmailAndPassword(email, password);
         if (user == null || !user.getPassword().equals(password)) {
-            return false;
+            return null;
         }
 
-        return true;
+        return user;
+    }
+
+    public boolean findByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public User saveUser(User newUser) {
+        return userRepository.save(newUser);
     }
 }
